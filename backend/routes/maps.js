@@ -57,6 +57,7 @@ router.route('/addlocation').get((req, res) => {
     .catch(function (error) {
         console.log(error);
     });
+    
 });
 
 router.route('/getstate').get((req, res) => {
@@ -66,7 +67,7 @@ router.route('/getstate').get((req, res) => {
 });
 
 router.route('/getdistrict').get((req, res) => {
-    Location.find({"properties.state_name_2011":"Odisha"}).distinct("properties.district_name_2011")
+    Location.find({"properties.state_name_2011": req.query.state}).distinct("properties.district_name_2011")
         .then(district => res.json(district))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -74,8 +75,8 @@ router.route('/getdistrict').get((req, res) => {
 router.route('/getsubdistrict').get((req, res) => {
     Location.find(
             {
-                "properties.state_name_2011":"Odisha", 
-                "properties.district_name_2011": "Khorda"
+                "properties.state_name_2011":req.query.state, 
+                "properties.district_name_2011": req.query.district
             }).distinct("properties.sub_district_name_2011")
         .then(subdistrict => res.json(subdistrict))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -84,9 +85,9 @@ router.route('/getsubdistrict').get((req, res) => {
 router.route('/getlocationname').get((req, res) => {
     Location.find(
             {
-                "properties.state_name_2011":"Odisha", 
-                "properties.district_name_2011": "Khorda",
-                "properties.sub_district_name_2011": "Jatani"
+                "properties.state_name_2011": req.query.state, 
+                "properties.district_name_2011": req.query.district,
+                "properties.sub_district_name_2011": req.query.subdistrict
             }).distinct("properties.location_name")
         .then(locationsname => res.json(locationsname))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -95,10 +96,10 @@ router.route('/getlocationname').get((req, res) => {
 router.route('/getcoordinates').get((req, res) => {
     Location.find(
             {
-                "properties.state_name_2011":"Odisha", 
-                "properties.district_name_2011": "Khorda",
-                "properties.sub_district_name_2011": "Jatani",
-                "properties.location_name": "Beruan"
+                "properties.state_name_2011": req.query.state, 
+                "properties.district_name_2011": req.query.district,
+                "properties.sub_district_name_2011": req.query.subdistrict,
+                "properties.location_name": req.query.location_name
             })
         .then(coordinates => res.json(coordinates))
         .catch(err => res.status(400).json('Error: ' + err));
