@@ -1,0 +1,27 @@
+{
+  "name": "mapsapi",
+  "version": "1.0.0",
+  "description": "iKure Internship Assignment",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uday032/iKure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Uday032/iKure/issues"
+  },
+  "homepage": "https://github.com/Uday032/iKure#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8"
+  }
+}
