@@ -11,6 +11,13 @@ import ReactSelect from '../components/ReactSelect'
 //axios api
 import instance from '../axios';
 
+//third party libraries
+import { MapContainer, TileLayer, Polygon, GeoJSON } from 'react-leaflet'
+
+const center = [85.324, 20.267]
+
+const purpleOptions = { color: 'purple' }
+
 export default class Location extends Component {
 
     constructor(){
@@ -28,7 +35,8 @@ export default class Location extends Component {
             sub_district: [],
             village_name: [],
             village_coordinates: [],
-            geometrytype: ''
+            geometrytype: '',
+            villageid: ''
         };
     }
 
@@ -117,9 +125,11 @@ export default class Location extends Component {
                 console.log(response.data);
                 this.setState({
                     village_coordinates: response.data[0].geometry.coordinates,
-                    geometrytype: response.data[0].geometry.type
+                    geometrytype: response.data[0].geometry.type,
+                    villageid: response.data[0].properties.village_ward_code_2011
                 })
             })
+        console.log(this.state.village_coordinates);
         // console.log(`Option selected:`, selectedvillage_name);
     };
 
@@ -167,9 +177,40 @@ export default class Location extends Component {
                             </div>
 
                             {this.state.geometrytype}
+                            <div className="mb-3 col-md-3" style={{ display: this.state.showvillage_name ? "block" : "none" }}>
+                                Coordinates: Please check console to see coordinates
+                            </div>
                         </Col>
                         <Col md="8">
-                            Map
+                            {/* <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
+                                <TileLayer
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <GeoJSON
+                                    attribution="Capa de Hospitales de ESRI"
+                                    data={coords}
+                                />
+
+                            </MapContainer> */}
+                            {/* <MapContainer center={center} zoom={13}>
+                                <FeatureGroup>
+                                     <GeoJSON data={coords} style={this.myStyle}></GeoJSON>
+                                </FeatureGroup>
+                            </MapContainer> */}
+
+                            <MapContainer zoom={13} center={center} scrollWheelZoom={true}>
+                                <TileLayer
+                                attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                {/* <FeatureGroup> */}
+                                     <GeoJSON data={this.state.village_coordinates} style={this.myStyle}></GeoJSON>
+                                {/* </FeatureGroup> */}
+                                <Polygon pathOptions={purpleOptions} positions={this.state.village_coordinates} />
+                            </MapContainer>
+                            {/* {this.state.village_coordinates} */}
+                            {console.log(this.state.village_coordinates)}
                         </Col>
                     </Row>
                 </Container>
