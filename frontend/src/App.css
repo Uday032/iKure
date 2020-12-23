@@ -1,3 +1,8 @@
 section {
   margin-top: 50px;  
 }
+
+.leaflet-container {
+  width: auto;
+  height: 80vh;
+}
