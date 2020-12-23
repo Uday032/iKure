@@ -1,5 +1,5 @@
 # iKure
-iKure Internship Assignment
+iKure Assignment
 
 ## How to start the Project
 ```
